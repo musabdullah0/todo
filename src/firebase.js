@@ -1,8 +1,10 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
+import dotenv from 'dotenv'
 
+dotenv.config()
 let config = {
-    apiKey: "AIzaSyCDvWeVauRsO3IEBRYX7Ha6BVCxzzJ4Akc",
+    apiKey: process.env.API_KEY,
     authDomain: "vuefb-todo.firebaseapp.com",
     databaseURL: "https://vuefb-todo.firebaseio.com",
     projectId: "vuefb-todo",

@@ -5,7 +5,9 @@
       <span>|</span>
       <router-link to="/about">About</router-link>
     </div>
-    <router-view />
+    <transition name="router-anim" enter-active-class="animate__animated animate__fadeIn">
+      <router-view />
+    </transition>
   </div>
 </template>
 

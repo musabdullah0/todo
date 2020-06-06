@@ -40,10 +40,6 @@ export default {
   created() {
     this.$bind("todos", db.collection("todos")).then(todos => {
       this.todos === todos;
-
-      // you can unbind a property anytime you want
-      // this will be done automatically when the component is destroyed
-      // this.$unbind("todos");
     });
   },
   firestore: {
