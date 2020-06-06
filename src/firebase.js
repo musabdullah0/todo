@@ -1,4 +1,3 @@
-// import { initializeApp } from 'firebase'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 
@@ -17,8 +16,3 @@ firebase.initializeApp(config)
 const db = firebase.firestore()
 
 export default db
-
-// const app = initializeApp(config)
-
-// export const db = app.database()
-// export const todosRef = db.ref('todos')

@@ -10,7 +10,7 @@
     <ul id="todo-list">
       <transition-group name="list-complete" tag="p">
         <li v-for="todo of todos" :key="todo.id" class="list-complete-item">
-          <Todo v-bind:todo="todo" @deleteTodo="onDeleteTodo" />
+          <Todo v-bind:todo="todo" @deleteTodo="onDeleteTodo" @toggleTodo="onToggleTodo" />
         </li>
       </transition-group>
     </ul>
@@ -38,28 +38,12 @@ export default {
     };
   },
   created() {
-    // db.collection("todos").onSnapshot(res => {
-    //   const changes = res.docChanges();
-    //   changes.forEach(change => {
-    //     if (change.type == "added") {
-    //       this.todos.push({
-    //         ...change.doc.data(),
-    //         id: change.doc.id
-    //       });
-    //     } else if (change.type == "removed") {
-    //       this.todos.filter(todo => todo.id != change.doc.id);
-    //     }
-    //   });
-    // });
     this.$bind("todos", db.collection("todos")).then(todos => {
       this.todos === todos;
-      // todos are ready to be used
-      // if it contained any reference to other document or collection, the
-      // promise will wait for those references to be fetched as well
 
       // you can unbind a property anytime you want
       // this will be done automatically when the component is destroyed
-      // this.$unbind('todos')
+      // this.$unbind("todos");
     });
   },
   firestore: {
@@ -81,6 +65,11 @@ export default {
         .then(() => {
           console.log("deleted");
         });
+    },
+    onToggleTodo(todo) {
+      db.collection("todos")
+        .doc(todo.id)
+        .set({ complete: todo.complete }, { merge: true });
     }
   }
 };

@@ -15,6 +15,7 @@ export default {
   methods: {
     toggleTodo() {
       this.todo.complete = !this.todo.complete;
+      this.$emit("toggleTodo", this.todo);
     }
   }
 };
