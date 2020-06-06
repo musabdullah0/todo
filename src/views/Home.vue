@@ -24,7 +24,7 @@
 <script>
 import Todo from "@/components/Todo.vue";
 import Input from "@/components/Input.vue";
-import { todosRef } from "../firebase";
+import db from "@/firebase";
 
 export default {
   name: "Home",
@@ -37,27 +37,50 @@ export default {
       todos: []
     };
   },
-  // created() {
-  //   todosRef.on("value", snap => {
-  //     snap.forEach(childSnap => {
-  //       this.todos.push({
-  //         id: childSnap.key,
-  //         item: childSnap.val().item,
-  //         complete: childSnap.val().complete
-  //       });
-  //     });
-  //   });
-  // },
-  firebase: {
-    todos: todosRef
+  created() {
+    // db.collection("todos").onSnapshot(res => {
+    //   const changes = res.docChanges();
+    //   changes.forEach(change => {
+    //     if (change.type == "added") {
+    //       this.todos.push({
+    //         ...change.doc.data(),
+    //         id: change.doc.id
+    //       });
+    //     } else if (change.type == "removed") {
+    //       this.todos.filter(todo => todo.id != change.doc.id);
+    //     }
+    //   });
+    // });
+    this.$bind("todos", db.collection("todos")).then(todos => {
+      this.todos === todos;
+      // todos are ready to be used
+      // if it contained any reference to other document or collection, the
+      // promise will wait for those references to be fetched as well
+
+      // you can unbind a property anytime you want
+      // this will be done automatically when the component is destroyed
+      // this.$unbind('todos')
+    });
+  },
+  firestore: {
+    todos: db.collection("todos")
   },
   methods: {
     onAddTodo(todo) {
-      console.log(todosRef);
-      todosRef.push({ item: todo, complete: false });
+      let newTodo = { item: todo, complete: false };
+      db.collection("todos")
+        .add(newTodo)
+        .then(() => {
+          console.log("added");
+        });
     },
     onDeleteTodo(id) {
-      todosRef.child(id).remove();
+      db.collection("todos")
+        .doc(id)
+        .delete()
+        .then(() => {
+          console.log("deleted");
+        });
     }
   }
 };

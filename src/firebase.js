@@ -1,5 +1,8 @@
-import { initializeApp } from 'firebase'
-const app = initializeApp({
+// import { initializeApp } from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+
+let config = {
     apiKey: "AIzaSyCDvWeVauRsO3IEBRYX7Ha6BVCxzzJ4Akc",
     authDomain: "vuefb-todo.firebaseapp.com",
     databaseURL: "https://vuefb-todo.firebaseio.com",
@@ -8,7 +11,14 @@ const app = initializeApp({
     messagingSenderId: "1041386275963",
     appId: "1:1041386275963:web:8fc462784bff7fa5a88ede",
     measurementId: "G-9JKDYSC520"
-})
+}
 
-export const db = app.database()
-export const todosRef = db.ref('todos')
+firebase.initializeApp(config)
+const db = firebase.firestore()
+
+export default db
+
+// const app = initializeApp(config)
+
+// export const db = app.database()
+// export const todosRef = db.ref('todos')
