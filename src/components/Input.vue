@@ -14,7 +14,8 @@ export default {
     };
   },
   methods: {
-    addTodo() {
+    addTodo(event) {
+      event.preventDefault();
       if (this.todo.length > 0) {
         this.$emit("addTodo", this.todo);
         this.todo = "";
